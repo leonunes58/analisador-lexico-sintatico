@@ -2,17 +2,14 @@ from enum import Enum
 
 
 class TokenType(Enum):
-    # Identificadores e literais
     ID = 'ID'
     FUNCID = 'FUNCID'
     NUMBER = 'NUMBER'
 
-    # Palavras reservadas (cada uma é seu próprio token, pois a
-    # linguagem é case-sensitive: migual != MIgual)
     ELGIO = 'ELGIO'
     DECIMAL = 'DECIMAL'
-    Z = 'Z'              # _Z_
-    NEG = 'NEG'           # _NEG_
+    Z = 'Z'
+    NEG = 'NEG'
     EXP = 'EXP'
     RESTO = 'RESTO'
     ENQUANTO = 'ENQUANTO'
@@ -27,15 +24,14 @@ class TokenType(Enum):
     IGUAL = 'IGUAL'
     DIFERENTE = 'DIFERENTE'
     MIGUAL = 'MIGUAL'
-    MIGUAL_CAP = 'MIGUAL_CAP'  # MIgual
+    MIGUAL_CAP = 'MIGUAL_CAP'
 
-    # Operadores e delimitadores
-    ASSIGN = 'ASSIGN'    # =
-    PLUS = 'PLUS'        # +
-    MINUS = 'MINUS'      # -
-    DIV = 'DIV'          # /
-    MULT = 'MULT'        # x
-    DOT = 'DOT'          # .
-    LPAREN = 'LPAREN'    # (
-    RPAREN = 'RPAREN'    # )
-    COMMA = 'COMMA'      # ,
+    ASSIGN = 'ASSIGN'
+    PLUS = 'PLUS'
+    MINUS = 'MINUS'
+    DIV = 'DIV'
+    MULT = 'MULT'
+    DOT = 'DOT'
+    LPAREN = 'LPAREN'
+    RPAREN = 'RPAREN'
+    COMMA = 'COMMA'
