@@ -20,11 +20,14 @@ pip install ply
 ### Como executar
 
 ```bash
-python3 analisador.py caminho/para/arquivo.elg
+cd elgol
+python3 main.py tests/correto.elgol
+python3 main.py tests/incorreto.elgol
 ```
 
 O script imprime: lista de tokens, tabela de símbolos e erros léxicos
-encontrados.
+encontrados. O código de saída é `0` quando não há erros léxicos e `1`
+quando pelo menos um erro é encontrado.
 
 ---
 

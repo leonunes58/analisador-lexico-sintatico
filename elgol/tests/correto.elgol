@@ -1,0 +1,25 @@
+* Programa de exemplo valido para o analisador lexico do Elgol
+inicio
+    Resultado = Numero + Betao.
+    Resultado = Resultado x 34.
+    Contador = $Soma(Numero, Betao).
+
+    se (Resultado maior Numero) entao
+        Resultado = Resultado - 1.
+    senao
+        Resultado = _Z_.
+    fim
+
+    enquanto (Contador diferente Numero) entao
+        Contador = Contador / 2.
+    fim
+
+    para (Numero migual Betao) entao
+        Numero = Numero EXP 2.
+    fim
+
+    Fracao = DECIMAL.
+    Sobra = Numero RESTO Betao.
+    Reverso = _NEG_.
+    Checagem = (Numero MIgual Betao).
+fim
