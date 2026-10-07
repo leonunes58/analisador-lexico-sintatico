@@ -1,0 +1,9 @@
+* Programa de exemplo com erros lexicos propositais
+inicio
+    resultado = Numero + Betao.
+    Teste39 = 10.
+    Xyz = 034.
+    Tes_Te = $teste(Numero).
+    Valor = Numero & Betao.
+    LetrA = 0.
+fim
