@@ -1,0 +1,4 @@
+* ERRO SINTATICO linha 3: parentese nao fechado
+inicio
+    Valor = (Base + 2 x Tamanho.
+fim

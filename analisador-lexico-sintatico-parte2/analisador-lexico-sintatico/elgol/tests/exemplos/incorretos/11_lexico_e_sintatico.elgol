@@ -1,0 +1,5 @@
+* Mistura de erros lexicos (identificador e numero invalidos) e sintaticos
+inicio
+    valor = 034.
+    Certo = Certo Certo.
+fim

@@ -1,0 +1,5 @@
+* ERRO SINTATICO linha 4: falta o '.' no fim do comando da linha 3
+inicio
+    Valor = 10
+    Novo = Valor + 1.
+fim

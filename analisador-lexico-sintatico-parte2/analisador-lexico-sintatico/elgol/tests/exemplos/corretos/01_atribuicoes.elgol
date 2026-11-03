@@ -1,0 +1,11 @@
+* Atribuicoes e expressoes aritmeticas com precedencia
+inicio
+    Base = 2.
+    Tamanho = 10.
+    Medida = Base x Tamanho / 2.
+    Volume = (Base + Tamanho) x 3 - 1.
+    Potencia = Base EXP 3 EXP 2.
+    Sobra = Tamanho RESTO 3.
+    Nulo = _Z_.
+    Negado = _NEG_ Tamanho + 5.
+fim

@@ -1,0 +1,7 @@
+* Varios erros sintaticos: o analisador se recupera no '.' e continua
+inicio
+    Valor = 10 +.
+    Novo = Valor.
+    Mais = x 3.
+    Final = $Somar(Valor,).
+fim

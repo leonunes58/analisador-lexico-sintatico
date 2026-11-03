@@ -1,0 +1,10 @@
+* Chamadas de funcao como comando e dentro de expressoes
+inicio
+    DECIMAL Media.
+    Valor = 5.
+    $Mostrar(Valor).
+    $Limpar().
+    Media = $Media(Valor, 10, Valor x 2) / 3.
+    Total = $Somar($Dobro(Valor), 1).
+    Teste = (Valor maior $Dobro(Valor)).
+fim
