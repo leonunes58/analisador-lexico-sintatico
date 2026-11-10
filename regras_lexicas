@@ -20,7 +20,8 @@ pip install ply
 ### Como executar
 
 ```bash
-python3 analisador.py caminho/para/arquivo.elg
+cd elgol
+python3 main.py tests/correto.elgol
 ```
 
 O script imprime: lista de tokens, tabela de símbolos e erros léxicos
@@ -145,4 +146,4 @@ também geram erro léxico e são simplesmente pulados.
 A tabela de símbolos é construída durante a tokenização: para cada
 `ID` e `FUNCID` reconhecido, é guardado o tipo e a lista de linhas em
 que o nome aparece. Ela é impressa junto com a lista de tokens ao rodar
-`analisador.py`.
+`main.py`.

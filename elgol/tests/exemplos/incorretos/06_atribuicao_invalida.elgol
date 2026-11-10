@@ -1,0 +1,4 @@
+* ERRO SINTATICO linha 3: lado esquerdo de '=' deve ser um identificador
+inicio
+    10 = Valor.
+fim

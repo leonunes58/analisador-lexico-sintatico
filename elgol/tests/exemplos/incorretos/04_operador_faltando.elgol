@@ -1,0 +1,4 @@
+* ERRO SINTATICO linha 3: dois operandos sem operador entre eles
+inicio
+    Valor = Base Tamanho.
+fim

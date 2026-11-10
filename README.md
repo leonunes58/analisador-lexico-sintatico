@@ -1,151 +1,129 @@
-# Documentação das Regras Léxicas — Analisador do Elgol
+# Analisador Léxico e Sintático — Linguagem Elgol
 
-## 1. Ferramenta utilizada
+Analisador para a linguagem **Elgol**, feito em **Python 3** com
+**PLY (Python Lex-Yacc)**:
 
-O analisador léxico foi implementado em **Python 3**, usando a biblioteca
-**PLY (Python Lex-Yacc)**, módulo `ply.lex`. O PLY é uma implementação em
-Python puro das ferramentas clássicas *lex/yacc*: cada tipo de token é
-definido por uma regra (string ou função) associada a uma expressão
-regular, e o PLY monta automaticamente o autômato de reconhecimento e a
-função de tokenização.
+- **Parte 1 — análise léxica** (`ply.lex`): reconhece os tokens, monta a
+  tabela de símbolos e relata erros léxicos.
+- **Parte 2 — análise sintática** (`ply.yacc`): verifica se a sequência de
+  tokens segue a gramática do Elgol, gera a árvore sintática e relata erros
+  sintáticos com linha e tokens esperados, recuperando-se para encontrar
+  vários erros no mesmo arquivo.
 
-### Instalação
+Documentação das regras:
+
+- [`regras_lexicas`](regras_lexicas) — tokens, expressões regulares e tratamento de erro léxico
+- [`regras_sintaticas.md`](regras_sintaticas.md) — gramática BNF, precedência e tratamento de erro sintático
+- [`docs/artigo_parte2.md`](docs/artigo_parte2.md) — texto da seção da Parte 2 para o artigo
+
+---
+
+## Instalação
+
+Requer Python 3.8+.
 
 ```bash
-pip install ply
+pip install -r requirements.txt
 ```
 
-(É um pacote único, sem dependências, disponível no PyPI.)
+(instala `ply` e `pytest`)
 
-### Como executar
+## Como usar
 
 ```bash
 cd elgol
 python3 main.py tests/correto.elgol
-python3 main.py tests/incorreto.elgol
+python3 main.py tests/exemplos/incorretos/03_sem_entao.elgol
 ```
 
-O script imprime: lista de tokens, tabela de símbolos e erros léxicos
-encontrados. O código de saída é `0` quando não há erros léxicos e `1`
-quando pelo menos um erro é encontrado.
+Saída: lista de tokens, tabela de símbolos, erros léxicos, erros sintáticos e,
+se o programa for válido, a árvore sintática. Código de saída `0` para
+programa válido e `1` se houver qualquer erro.
+
+Opções:
+
+| Opção | Efeito |
+|---|---|
+| `--sem-tokens` | não imprime a lista de tokens |
+| `--sem-arvore` | não imprime a árvore sintática |
+
+Exemplo de erro:
+
+```
+=== ERROS SINTATICOS ===
+linha 5: token inesperado identificador = 'Valor'; esperado: 'entao'
+
+RESULTADO: programa INVÁLIDO
+```
+
+## Demonstração
+
+```bash
+cd elgol
+python3 demo.py            # roda todos os exemplos e mostra o resumo
+python3 demo.py -v         # mostra cada erro encontrado nos exemplos incorretos
+python3 demo.py --arvore   # mostra a árvore dos exemplos corretos
+```
+
+## Testes automatizados
+
+```bash
+cd elgol
+python3 -m pytest -v tests
+```
+
+46 testes: todos os arquivos de exemplo (corretos devem ser aceitos;
+incorretos devem ser rejeitados **na linha esperada**), formato da árvore
+(precedência e associatividade dos operadores), todos os operadores
+relacionais, chamadas de função e recuperação de erros.
 
 ---
 
-## 2. Categorias de token reconhecidas
-
-| Token | Descrição | Exemplo |
-|---|---|---|
-| `ID` | Identificador de variável | `Lixo`, `Resultado` |
-| `FUNCID` | Nome de função | `$Soma` |
-| `NUMBER` | Número inteiro | `34`, `200` |
-| Palavras reservadas | Ver tabela abaixo | `inicio`, `se`, `EXP` |
-| `ASSIGN` | `=` | |
-| `PLUS` | `+` | |
-| `MINUS` | `-` | |
-| `DIV` | `/` | |
-| `MULT` | `x` | |
-| `DOT` | `.` (fim de comando) | |
-| `LPAREN` / `RPAREN` | `(` `)` | |
-| `COMMA` | `,` (separador de parâmetros) | |
-| (descartado) | Comentário `* ...` até o fim da linha | |
-
-### Palavras reservadas (case-sensitive)
+## Estrutura do projeto
 
 ```
-elgio, DECIMAL, _Z_, _NEG_, EXP, RESTO,
-enquanto, se, entao, senao, para,
-inicio, fim,
-maior, menor, igual, diferente, migual, MIgual
+elgol/
+├── main.py                 # linha de comando
+├── analyzer.py             # junta léxico + sintático (função analyze)
+├── demo.py                 # roteiro de demonstração
+├── lexer/
+│   ├── lexer.py            # Parte 1: regras léxicas (ply.lex)
+│   └── token.py            # enum com os tipos de token
+├── symbols/
+│   └── symbols_table.py    # tabela de símbolos
+├── syntax/
+│   ├── parser.py           # Parte 2: gramática (ply.yacc)
+│   └── ast.py              # nós da árvore sintática
+└── tests/
+    ├── correto.elgol       # exemplo da Parte 1
+    ├── incorreto.elgol     # exemplo com erros léxicos da Parte 1
+    ├── exemplos/
+    │   ├── corretos/       # programas válidos
+    │   └── incorretos/     # um erro sintático típico por arquivo
+    └── test_analisador.py  # testes pytest
 ```
 
-`migual` e `MIgual` são duas palavras reservadas **distintas** (a
-linguagem é case-sensitive), cada uma vira um token diferente
-(`MIGUAL` e `MIGUAL_CAP`).
-
----
-
-## 3. Regras formais (expressões regulares)
-
-### 3.1 Identificador (`ID`)
-
-> Começa com **consoante maiúscula**, termina com **letra minúscula**,
-> tem no mínimo **4 caracteres** e contém **apenas letras**.
+## Resumo da linguagem
 
 ```
-[BCDFGHJKLMNPQRSTVWXYZ][A-Za-z]*[a-z]     (comprimento total >= 4)
+* comentário até o fim da linha
+inicio
+    DECIMAL Media.
+    Contador = 1.
+    Soma = _Z_.
+    enquanto (Contador migual 10) entao
+        Soma = Soma + Contador x 2.
+        Contador = Contador + 1.
+    fim
+    se (Soma maior 100) entao
+        Media = Soma / 10.
+    senao
+        Media = _NEG_ 1.
+    fim
+    $Mostrar(Media).
+fim
 ```
 
-| Entrada | Válido? | Motivo |
-|---|---|---|
-| `Teste` | ✅ | consoante maiúscula, termina minúscula, 5 letras |
-| `PEsar` | ✅ | maiúsculas no meio são permitidas |
-| `teste` | ❌ | não começa com maiúscula |
-| `Teste39` | ❌ | contém dígitos |
-| `Tes_Te` | ❌ | contém `_` |
-| `Xyz`, `Bh`, `Lxt` | ❌ | menos de 4 caracteres |
-| `LetrA` | ❌ | termina com maiúscula |
-| `Ateras` | ❌ | começa com vogal |
-
-### 3.2 Nome de função (`FUNCID`)
-
-> `$` seguido de um identificador válido (mesma regra acima).
-
-```
-\$[BCDFGHJKLMNPQRSTVWXYZ][A-Za-z]*[a-z]   (parte após o $ com >= 4 chars)
-```
-
-`$Teste` é válido; `$teste`, `$Te34`, `$Te` não são.
-
-### 3.3 Número inteiro (`NUMBER`)
-
-> Começa com dígito de **1 a 9** seguido de dígitos quaisquer (sem zero
-> à esquerda; o dígito `0` sozinho não existe na linguagem).
-
-```
-[1-9][0-9]*
-```
-
-`200` é válido; `034` e `0` são inválidos (o zero é representado pelo
-operador reservado `_Z_`, e números negativos pelo operador `_NEG_`).
-
-### 3.4 Comentário
-
-```
-\*[^\n]*
-```
-
-Do caractere `*` até o fim da linha; é descartado (não gera token).
-
-### 3.5 Delimitador de comando
-
-Cada comando termina com `.` (token `DOT`), não com `;`.
-
----
-
-## 4. Estratégia de reconhecimento e tratamento de erro
-
-Para conseguir relatar erros léxicos de forma legível (em vez de reportar
-caractere a caractere), o analisador usa uma regra "guarda-chuva" que
-captura qualquer sequência de letras/dígitos/`_` iniciada por letra ou
-`_` (`[A-Za-z_][A-Za-z0-9_]*`) e uma regra equivalente para nomes de
-função (prefixo `$`). Dentro da função de tratamento dessas regras:
-
-1. Se o valor capturado é uma palavra reservada → gera o token
-   correspondente.
-2. Senão, se casa com a regra formal de identificador → gera `ID`
-   (ou `FUNCID`).
-3. Senão → é um **erro léxico**: a mensagem é registrada com o número da
-   linha e o texto encontrado, e o token é descartado (a análise
-   continua nas linhas seguintes).
-
-Caracteres que não pertencem a nenhuma regra (ex.: `&`, `0` isolado)
-também geram erro léxico e são simplesmente pulados.
-
----
-
-## 5. Tabela de símbolos
-
-A tabela de símbolos é construída durante a tokenização: para cada
-`ID` e `FUNCID` reconhecido, é guardado o tipo e a lista de linhas em
-que o nome aparece. Ela é impressa junto com a lista de tokens ao rodar
-`analisador.py`.
+- Identificadores: consoante maiúscula no início, minúscula no fim, só letras, ≥ 4 caracteres.
+- Funções: `$` + identificador. Números: inteiros sem zero à esquerda (o zero é `_Z_`).
+- Operadores: `+ - x / RESTO EXP`, unário `_NEG_`; relacionais `maior menor igual diferente migual MIgual`.

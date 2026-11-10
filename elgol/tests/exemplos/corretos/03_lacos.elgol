@@ -1,0 +1,15 @@
+* Lacos enquanto e para com comparacoes
+inicio
+    Contador = 1.
+    Soma = _Z_.
+    enquanto (Contador migual 10) entao
+        Soma = Soma + Contador.
+        Contador = Contador + 1.
+    fim
+    para (Contador MIgual 1) entao
+        Contador = Contador - 1.
+    fim
+    enquanto (Soma diferente _Z_) entao
+        Soma = _Z_.
+    fim
+fim

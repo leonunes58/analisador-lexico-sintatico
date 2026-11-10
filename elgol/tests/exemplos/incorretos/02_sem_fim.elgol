@@ -1,0 +1,6 @@
+* ERRO SINTATICO: o bloco 'se' nao foi fechado com 'fim' (arquivo termina antes)
+inicio
+    Valor = 10.
+    se (Valor maior 5) entao
+        Valor = 1.
+fim

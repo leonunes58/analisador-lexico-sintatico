@@ -18,8 +18,8 @@ inicio
         Numero = Numero EXP 2.
     fim
 
-    Fracao = DECIMAL.
+    DECIMAL Fracao.
     Sobra = Numero RESTO Betao.
-    Reverso = _NEG_.
+    Reverso = _NEG_ Numero.
     Checagem = (Numero MIgual Betao).
 fim

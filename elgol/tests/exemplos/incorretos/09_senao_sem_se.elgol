@@ -1,0 +1,6 @@
+* ERRO SINTATICO linha 4: 'senao' sem um 'se' correspondente
+inicio
+    Valor = 1.
+    senao
+        Valor = 2.
+fim

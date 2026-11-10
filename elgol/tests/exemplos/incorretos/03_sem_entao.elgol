@@ -1,0 +1,7 @@
+* ERRO SINTATICO detectado na linha 5: falta 'entao' depois da condicao (linha 4)
+inicio
+    Valor = 10.
+    enquanto (Valor maior 1)
+        Valor = Valor - 1.
+    fim
+fim

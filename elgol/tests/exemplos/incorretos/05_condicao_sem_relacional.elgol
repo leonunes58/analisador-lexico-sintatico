@@ -1,0 +1,7 @@
+* ERRO SINTATICO linha 4: a condicao precisa de um operador relacional
+inicio
+    Valor = 3.
+    se (Valor) entao
+        Valor = 1.
+    fim
+fim

@@ -1,0 +1,16 @@
+* se / entao / senao, inclusive aninhados
+inicio
+    Nota = 7.
+    se (Nota maior 6) entao
+        Situacao = 1.
+    fim
+    se (Nota menor 5) entao
+        Situacao = _Z_.
+    senao
+        se (Nota igual 10) entao
+            Situacao = 2.
+        senao
+            Situacao = 1.
+        fim
+    fim
+fim
